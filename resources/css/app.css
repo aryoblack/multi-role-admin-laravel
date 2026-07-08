@@ -1,0 +1,363 @@
+@import "tailwindcss";
+@import "./datatable-modern.css";
+
+@theme {
+    /* Custom Colors - Matching Project theme */
+    --color-primary: #3b82f6;
+    --color-primary-dark: #2563eb;
+    --color-secondary: #64748b;
+    --color-success: #16a34a;
+    --color-danger: #dc2626;
+    --color-warning: #eab308;
+    --color-info: #0891b2;
+
+    /* Custom Fonts */
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+    /* Custom Shadows */
+    --shadow-soft: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-strong: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-premium: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+    /* Animation Durations */
+    --duration-slow: 500ms;
+    --duration-normal: 300ms;
+    --duration-fast: 150ms;
+}
+
+@layer base {
+    html {
+        @apply antialiased scroll-smooth;
+    }
+
+    body {
+        @apply bg-gray-50 text-gray-900 font-sans;
+    }
+}
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+    @apply w-1.5;
+}
+
+::-webkit-scrollbar-track {
+    @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-full hover:bg-gray-400 transition-colors;
+}
+
+/* Navigation & Layout Enhancements */
+#wrapper {
+    @apply flex overflow-hidden w-full h-screen relative;
+}
+
+#sidebar-wrapper {
+    @apply !relative !left-0 !top-0 w-64 flex-shrink-0 transition-all duration-300 ease-in-out z-[1050] h-full overflow-y-auto;
+}
+
+#page-content-wrapper {
+    @apply flex-1 flex flex-col overflow-hidden h-full min-w-0;
+}
+
+@media (min-width: 1024px) {
+    #wrapper.toggled #sidebar-wrapper {
+        @apply !ml-0 !w-20;
+    }
+
+    #wrapper.toggled #sidebar-wrapper .sidebar-brand {
+        @apply px-3;
+    }
+
+    #wrapper.toggled #sidebar-wrapper .sidebar-brand-link {
+        @apply justify-center p-2;
+    }
+
+    #wrapper.toggled #sidebar-wrapper nav {
+        @apply px-3;
+    }
+
+    #wrapper.toggled #sidebar-wrapper .menu-item-parent,
+    #wrapper.toggled #sidebar-wrapper .menu-item-child,
+    #wrapper.toggled #sidebar-wrapper .menu-item-grandchild {
+        @apply justify-center px-0;
+    }
+
+    #wrapper.toggled #sidebar-wrapper .menu-icon {
+        @apply mx-0 mr-0;
+    }
+
+    #wrapper.toggled #sidebar-wrapper .sidebar-brand-text,
+    #wrapper.toggled #sidebar-wrapper .sidebar-menu-label,
+    #wrapper.toggled #sidebar-wrapper .sidebar-chevron,
+    #wrapper.toggled #sidebar-wrapper .sidebar-logout-label,
+    #wrapper.toggled #sidebar-wrapper .submenu-container {
+        @apply hidden;
+    }
+
+    #wrapper.toggled #sidebar-wrapper .logout-btn {
+        @apply px-0;
+    }
+}
+
+@media (max-width: 1023px) {
+    #sidebar-wrapper {
+        @apply !fixed !inset-y-0 !left-0 !-translate-x-full !w-[min(18rem,82vw)] !-ml-0;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        @apply !translate-x-0;
+    }
+
+    #sidebar-overlay {
+        @apply fixed inset-0 bg-black/50 z-[1045] transition-opacity duration-300;
+        display: none;
+    }
+
+    #wrapper.toggled #sidebar-overlay {
+        @apply !block opacity-100;
+    }
+}
+
+/* 🎨 Missing Custom Classes (Recovered from docs & patterns) */
+
+@layer components {
+    .page-shell {
+        @apply space-y-5;
+    }
+
+    .page-header {
+        @apply flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between;
+    }
+
+    .page-title {
+        @apply flex items-center gap-3 text-2xl sm:text-3xl font-bold text-gray-900;
+    }
+
+    .page-title-icon {
+        @apply flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 text-white shadow-sm;
+    }
+
+    .page-subtitle {
+        @apply mt-2 text-sm text-gray-600;
+    }
+
+    .panel {
+        @apply overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm;
+    }
+
+    .panel-header {
+        @apply border-b border-gray-200 bg-gray-50 px-4 py-4 sm:px-6;
+    }
+
+    .panel-title {
+        @apply flex items-center gap-2 text-base sm:text-lg font-semibold text-gray-900;
+    }
+
+    .panel-body {
+        @apply p-4 sm:p-6;
+    }
+
+    .btn-primary-theme {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-blue-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+    }
+
+    .btn-secondary-theme {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition-all duration-200 hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+    }
+
+    .btn-danger-theme {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2;
+    }
+
+    .icon-action {
+        @apply inline-flex h-9 w-9 items-center justify-center rounded-lg text-white shadow-sm transition-all duration-200 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2;
+    }
+
+    .icon-action-edit {
+        @apply bg-amber-500 hover:bg-amber-600 focus:ring-amber-500;
+    }
+
+    .icon-action-delete {
+        @apply bg-red-600 hover:bg-red-700 focus:ring-red-500;
+    }
+
+    .icon-action-info {
+        @apply bg-cyan-600 hover:bg-cyan-700 focus:ring-cyan-500;
+    }
+
+    .form-field {
+        @apply block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-900 outline-none transition-all duration-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20;
+    }
+
+    /* Card Hover Effect */
+    .card-hover {
+        @apply transition-all duration-300 hover:shadow-premium hover:-translate-y-1;
+    }
+
+    /* Primary Button with Gradient & Animation */
+    .btn-animate {
+        @apply relative overflow-hidden rounded-lg bg-blue-600 px-6 py-2.5 font-semibold text-white transition-all duration-200 hover:bg-blue-700 active:scale-95;
+    }
+
+    /* Gradient Text Utility */
+    .gradient-text {
+        @apply font-bold text-gray-900;
+    }
+
+    /* Glass Effect Utility */
+    .glass {
+        @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-lg;
+    }
+
+    /* Stat Card Modern */
+    .stat-card {
+        @apply relative overflow-hidden rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition-all duration-200 hover:shadow-md;
+    }
+
+    .stat-icon {
+        @apply flex h-12 w-12 items-center justify-center rounded-lg text-xl transition-all duration-200;
+    }
+
+    /* Badge Modern */
+    .badge-modern {
+        @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-bold transition-all duration-200;
+    }
+
+    /* Menu Item Base */
+    .menu-item {
+        @apply flex items-center rounded-lg px-4 py-2.5 font-medium transition-all duration-200;
+    }
+
+    /* Section divider */
+    .section-divider {
+        @apply h-px bg-gray-200 my-6;
+    }
+
+    /* Modern Scrollbars for specific elements */
+    .fancy-scroll::-webkit-scrollbar {
+        @apply w-1;
+    }
+
+    .fancy-scroll::-webkit-scrollbar-thumb {
+        @apply bg-gray-300 rounded-full hover:bg-gray-400;
+    }
+}
+
+/* 🎬 Custom Animations (Missing @keyframes) */
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.shimmer-effect {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes pulse-soft {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(0.98);
+    }
+}
+
+.animate-pulse-soft {
+    animation: pulse-soft 2s infinite;
+}
+
+/* 📊 DataTables Custom Overrides */
+.dataTables_wrapper {
+    @apply py-4;
+}
+
+.dataTables_filter input {
+    @apply px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 transition-all outline-none bg-white;
+}
+
+.dataTables_length select {
+    @apply px-3 py-1.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 transition-all outline-none cursor-pointer bg-white;
+}
+
+.dataTables_paginate .paginate_button {
+    @apply !px-3 !py-1.5 !mx-0.5 !text-sm !font-medium !rounded-lg !border !border-transparent !transition-all;
+}
+
+.dataTables_paginate .paginate_button.current {
+    @apply !bg-blue-600 !text-white;
+}
+
+.dataTables_paginate .paginate_button:hover:not(.current):not(.disabled) {
+    @apply !bg-gray-100 !text-blue-600 !border-gray-200;
+}
+
+/* 🏠 Dashboard Specific Elements */
+.welcome-banner {
+    @apply relative overflow-hidden rounded-lg bg-blue-600 shadow-md;
+}
+
+.action-card {
+    @apply flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 transition-all duration-200 border border-transparent hover:border-gray-100;
+}
+
+/* Responsive Fixes */
+@media (max-width: 639px) {
+    .container-fluid {
+        @apply px-4;
+    }
+
+    .stat-card {
+        @apply p-4;
+    }
+
+    .action-card {
+        @apply items-start gap-3 p-3;
+    }
+}

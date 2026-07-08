@@ -1,0 +1,369 @@
+/* ============================================
+   SIDEBAR FIX - Clean & Simple
+   ============================================ */
+
+/* Reset any conflicting styles */
+.sidebar * {
+    box-sizing: border-box;
+}
+
+/* Sidebar Container */
+.sidebar {
+    background: linear-gradient(180deg, #1a1d2e 0%, #16192b 100%);
+    display: flex !important;
+    flex-direction: column !important;
+    color: #a6b0cf;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100vh;
+    width: 100%;
+}
+
+/* Scrollbar */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+.sidebar-header {
+    padding: 1.5rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    flex-shrink: 0;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+}
+
+.logo-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #3699ff 0%, #2684ff 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(54, 153, 255, 0.3);
+    flex-shrink: 0;
+}
+
+.logo-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    min-width: 0;
+}
+
+.logo-title {
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+    letter-spacing: 0.5px;
+    line-height: 1.2 !important;
+}
+
+.logo-subtitle {
+    font-size: 0.75rem;
+    color: #a6b0cf;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+.sidebar-nav {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.nav-item {
+    margin-bottom: 0.25rem;
+}
+
+.nav-link {
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.875rem 1rem !important;
+    border-radius: 10px !important;
+    color: #a6b0cf !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    font-size: 0.9375rem !important;
+    transition: all 0.3s ease !important;
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+    background: transparent !important;
+    border: none !important;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: #ffffff !important;
+    transform: translateX(2px);
+}
+
+.nav-link.active {
+    background: #3699ff !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 16px rgba(54, 153, 255, 0.25);
+}
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.875rem;
+    font-size: 1.125rem;
+    flex-shrink: 0;
+}
+
+.nav-text {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nav-arrow {
+    margin-left: auto;
+    font-size: 0.75rem;
+    transition: transform 0.3s ease;
+    opacity: 0.7;
+    flex-shrink: 0;
+}
+
+.nav-link[aria-expanded="true"] .nav-arrow {
+    transform: rotate(180deg);
+}
+
+/* ============================================
+   SUBMENU
+   ============================================ */
+.submenu {
+    padding: 0.5rem 0 0.5rem 1rem;
+    position: relative;
+}
+
+.submenu::before {
+    content: '';
+    position: absolute;
+    left: 1.75rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
+
+.submenu-link {
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.75rem 1rem 0.75rem 2rem !important;
+    border-radius: 8px !important;
+    color: #a6b0cf !important;
+    text-decoration: none !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+    position: relative;
+    margin-bottom: 0.125rem;
+    background: transparent !important;
+}
+
+.submenu-link:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: #ffffff !important;
+    padding-left: 2.25rem !important;
+}
+
+.submenu-link.active {
+    background: rgba(54, 153, 255, 0.15) !important;
+    color: #3699ff !important;
+    font-weight: 600 !important;
+}
+
+.submenu-bullet {
+    width: 6px;
+    height: 6px;
+    background: currentColor;
+    border-radius: 50%;
+    margin-right: 0.875rem;
+    opacity: 0.5;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.submenu-link.active .submenu-bullet {
+    opacity: 1;
+    transform: scale(1.3);
+}
+
+.submenu-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ============================================
+   EMPTY STATE
+   ============================================ */
+.empty-menu {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #a6b0cf;
+    opacity: 0.6;
+}
+
+.empty-menu i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.3;
+    display: block;
+}
+
+.empty-menu p {
+    margin: 0;
+    font-size: 0.875rem;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.sidebar-footer {
+    padding: 1.25rem 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: auto;
+    flex-shrink: 0;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.875rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+}
+
+.user-avatar {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #3699ff 0%, #2684ff 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: #ffffff;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(54, 153, 255, 0.3);
+}
+
+.user-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.125rem;
+}
+
+.user-role {
+    font-size: 0.75rem;
+    color: #a6b0cf;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.logout-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.625rem;
+    padding: 0.875rem 1rem !important;
+    background: rgba(246, 78, 96, 0.1) !important;
+    color: #f64e60 !important;
+    border-radius: 10px !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    font-size: 0.9375rem !important;
+    transition: all 0.3s ease !important;
+    border: 1px solid transparent !important;
+    width: 100%;
+}
+
+.logout-btn:hover {
+    background: #f64e60 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(246, 78, 96, 0.3);
+    transform: translateY(-2px);
+}
+
+.logout-btn i {
+    font-size: 1rem;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+    .sidebar-header {
+        padding: 1rem;
+    }
+
+    .logo-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.25rem;
+    }
+
+    .logo-title {
+        font-size: 1.125rem !important;
+    }
+
+    .sidebar-nav {
+        padding: 0.75rem;
+    }
+
+    .sidebar-footer {
+        padding: 1rem;
+    }
+}

@@ -1,0 +1,147 @@
+# =========================================================
+# BOLEH DI-IGNORE
+# File lokal, rahasia, cache, dependency hasil install,
+# dan artefak build yang bisa dibuat ulang.
+# =========================================================
+
+# Secret dan konfigurasi environment lokal.
+.env
+.env.*
+!.env.example
+
+# Credential Composer lokal.
+/auth.json
+
+# Dependency hasil install.
+/node_modules
+/vendor
+
+# Hasil build dan file runtime frontend.
+/public/build
+/public/hot
+
+# Symlink/storage publik hasil command artisan.
+/public/storage
+
+# Key, cache, dan file runtime Laravel/PHP.
+/storage/*.key
+/storage/pail
+/.phpunit.cache
+.phpunit.result.cache
+.phpactor.json
+*.log
+
+# Konfigurasi IDE/editor lokal.
+/.fleet
+/.idea
+/.nova
+/.vscode
+/.zed
+
+# File OS lokal.
+.DS_Store
+Thumbs.db
+
+# Konfigurasi VM lokal.
+Homestead.json
+Homestead.yaml
+
+# Catatan lokal/generated selama development.
+# Jangan upload file ini ke GitHub karena isinya biasanya berupa
+# log perbaikan, instruksi sementara, output debug, atau kredensial.
+/ALL_IMPROVEMENTS_COMPLETE.md
+/ANSWER_SCALABILITY.md
+/BACKUP_FEATURE_COMPLETE.md
+/BACKUP_QUICK_REFERENCE.md
+/BACKUP_READY.md
+/BOOTSTRAP_CONFLICT_FIXED.md
+/BOOTSTRAP_DATATABLE_REMOVED.txt
+/BRANDING_UPDATE_SUCCESS.md
+/BUGFIX_APP_PROVIDER.md
+/BUGFIX_DASHBOARD.md
+/CODE_REVIEW_ANALYSIS.md
+/COMPANY_BRANDING_UPDATE.md
+/COMPANY_SETTINGS_SUMMARY.md
+/DEBUG_SUBMENU.md
+/DO_THIS_NOW.md
+/ENABLE_ZIP_EXTENSION.md
+/ENABLE_ZIP_NOW.md
+/FINAL_FIX_DATATABLE.txt
+/FINAL_SUMMARY.md
+/FIX_APACHE_ZIP.md
+/FIX_DATATABLE_COMPLETE.txt
+/FIX_SUMMARY.md
+/FIX_ZIP_EXTENSION.md
+/FIX_ZIP_FINAL.md
+/IMPROVEMENTS_CHECKLIST.md
+/IMPROVEMENTS_IMPLEMENTED.md
+/JALANKAN_INI_SEKARANG.txt
+/JALANKAN_SEKARANG.txt
+/KONVERSI_TAILWIND_SELESAI.md
+/menu_output.txt
+/MENU_REGENERATION_SUCCESS.md
+/MULAI_DISINI.md
+/NO_ZIP_VERSION_ACTIVE.md
+/PASSWORD_RESET_SUCCESS.md
+/QUICK_FIX.txt
+/QUICK_IMPROVEMENTS.md
+/REBUILD_ASSETS.txt
+/RESTART_AND_TEST.md
+/SIDEBAR_FIX_COMPLETE.md
+/SIDEBAR_REDESIGN.md
+/SIDEBAR_UPDATE_SUCCESS.md
+/SOLUSI_SUBMENU.md
+/START_HERE.md
+/STEP_BY_STEP_FIX.md
+/SUBMENU_FIX_COMPLETE.md
+/SUMMARY.md
+/SWITCH_TO_NO_ZIP.md
+/TAILWIND_CONVERSION_COMPLETE.md
+/TAILWIND_CONVERSION_PROGRESS.md
+/TEST_BACKUP_NOW.md
+/TEST_SIDEBAR_NOW.md
+/USER_CREDENTIALS.md
+/VIEW_CONVERSION_CHECKLIST.md
+/VIEW_CONVERSION_PROGRESS.md
+
+# =========================================================
+# JANGAN DI-IGNORE
+# File sumber, template konfigurasi, lockfile, test, dan
+# dokumentasi penting harus tetap bisa masuk Git.
+# =========================================================
+
+!.editorconfig
+!.env.example
+!.gitattributes
+!.gitignore
+!README.md
+!composer.json
+!composer.lock
+!CHANGELOG.md
+!CHANGELOG_TAILWIND.md
+!BUILD_INSTRUCTIONS.md
+!COMPANY_SETTINGS_GUIDE.md
+!DATABASE_BACKUP_GUIDE.md
+!DATATABLE_GLOBAL_USAGE.md
+!DATATABLE_MODERN_GUIDE.md
+!DEPLOYMENT_GUIDE.md
+!DOCUMENTATION_INDEX.md
+!FAQ_TAILWIND.md
+!package.json
+!package-lock.json
+!phpunit.xml
+!QUICK_START.md
+!README_TAILWIND.md
+!SCALABILITY_REPORT.md
+!TAILWIND_CONVERSION_GUIDE.md
+!UPDATE_CONTROLLER_BUTTONS.md
+!vite.config.js
+!artisan
+!app/
+!bootstrap/
+!config/
+!database/
+!public/
+!resources/
+!routes/
+!tests/
