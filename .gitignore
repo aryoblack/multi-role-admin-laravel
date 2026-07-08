@@ -19,6 +19,7 @@
 # Hasil build dan file runtime frontend.
 /public/build
 /public/hot
+/public/vendor/bootstrap
 
 # Symlink/storage publik hasil command artisan.
 /public/storage

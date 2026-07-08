@@ -15,6 +15,49 @@ Aplikasi manajemen multi-role berbasis Laravel 12. Proyek ini menyediakan autent
 - Pengaturan aplikasi.
 - Backup, restore, download, upload, hapus, dan export database untuk cPanel.
 
+## Teknologi
+
+Backend:
+
+- Laravel 12.
+- PHP 8.2 atau lebih baru.
+- MySQL atau MariaDB.
+- Blade template engine.
+- Laravel migration dan seeder.
+- Composer.
+
+Frontend:
+
+- Tailwind CSS 4.
+- Vite.
+- JavaScript.
+- jQuery.
+- DataTables.
+- SweetAlert2.
+- Font Awesome.
+- Google Fonts Inter.
+
+Package PHP utama:
+
+- `laravel/framework`
+- `barryvdh/laravel-dompdf`
+- `yajra/laravel-datatables-oracle`
+- `laravel/tinker`
+
+Package frontend utama:
+
+- `vite`
+- `tailwindcss`
+- `@tailwindcss/vite`
+- `laravel-vite-plugin`
+- `axios`
+- `concurrently`
+
+Catatan frontend:
+
+- Styling utama menggunakan Tailwind CSS.
+- DataTables dan SweetAlert2 dimuat dari asset lokal di `public/vendor`.
+
 ## Kebutuhan Sistem
 
 - PHP 8.2 atau lebih baru.
@@ -22,6 +65,7 @@ Aplikasi manajemen multi-role berbasis Laravel 12. Proyek ini menyediakan autent
 - Node.js dan npm.
 - MySQL atau MariaDB.
 - Ekstensi PHP umum Laravel, termasuk PDO MySQL.
+- Web server lokal seperti Laragon, Laravel Artisan Serve, Apache, atau Nginx.
 
 ## Instalasi Lokal
 
@@ -133,8 +177,11 @@ composer run dev
 - `app/Models` - model utama.
 - `database/migrations` - struktur database.
 - `database/seeders` - data awal role, menu, permission, setting, dan super admin.
+- `resources/css` - styling Tailwind dan custom CSS.
+- `resources/js` - JavaScript aplikasi dan helper DataTables.
 - `resources/views` - Blade view.
 - `routes/web.php` - routing web.
+- `public/vendor` - asset lokal pihak ketiga seperti jQuery, DataTables, SweetAlert2, dan Font Awesome.
 - `public/build` - hasil build frontend, tidak disimpan ke Git.
 
 ## Catatan Git
