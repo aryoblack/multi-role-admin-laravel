@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CompanySetting;
+use App\Support\PermissionResolver;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -13,6 +14,7 @@ class CompanySettingController extends Controller
     public function index()
     {
         $setting = CompanySetting::first();
+        $pagePermission = PermissionResolver::forPath(request()->user(), '/company-settings');
         
         // Create default setting if not exists
         if (!$setting) {
@@ -27,7 +29,7 @@ class CompanySettingController extends Controller
             ]);
         }
         
-        return view('company-settings.index', compact('setting'));
+        return view('company-settings.index', compact('setting', 'pagePermission'));
     }
 
     public function update(Request $request)

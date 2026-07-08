@@ -48,6 +48,13 @@
                 @csrf
                 @method('PUT')
 
+                @if(!$pagePermission->can_update)
+                    <div class="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
+                        Anda hanya memiliki akses melihat pengaturan perusahaan. Perubahan tidak tersedia untuk role Anda.
+                    </div>
+                @endif
+
+                <fieldset {{ !$pagePermission->can_update ? 'disabled' : '' }}>
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <!-- Left Column: Basic Info -->
                     <div class="lg:col-span-8 space-y-6">
@@ -192,16 +199,21 @@
                         </div>
                     </div>
                 </div>
+                </fieldset>
 
                 <div class="pt-8 border-t border-gray-100 flex items-center justify-end gap-3">
-                    <button type="reset" class="btn-secondary-theme">
-                        <i class="fas fa-undo"></i>
-                        Reset
-                    </button>
-                    <button type="submit" class="btn-primary-theme">
-                        <i class="fas fa-save"></i>
-                        Simpan Perubahan
-                    </button>
+                    @if($pagePermission->can_update)
+                        <button type="reset" class="btn-secondary-theme">
+                            <i class="fas fa-undo"></i>
+                            Reset
+                        </button>
+                        <button type="submit" class="btn-primary-theme">
+                            <i class="fas fa-save"></i>
+                            Simpan Perubahan
+                        </button>
+                    @else
+                        <span class="text-sm text-gray-500">Mode lihat saja</span>
+                    @endif
                 </div>
             </form>
         </div>

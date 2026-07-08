@@ -7,6 +7,7 @@ use App\Models\Permission;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -26,15 +27,11 @@ class CheckPermission
 
         $user = Auth::user();
 
-        // 2. Bypass Super Admin -> Selalu diizinkan
-        if ($user->isSuperAdmin()) {
-            return $next($request);
-        }
-
         // 3. Dapatkan Path URL saat ini
         // Contoh: /users/create -> users
         // Contoh: /users/1/edit -> users
         $currentPath = '/' . trim($request->path(), '/');
+        $cacheVersion = (int) Cache::get('permission_cache_version', 1);
 
         // Cari menu yang URL-nya cocok dengan path saat ini
         // Kita loop semua menu untuk mencari yang paling spesifik atau cocok
@@ -42,7 +39,11 @@ class CheckPermission
         // Asumsi: URL di menu adalah prefix valid (misal: /users)
 
         // Ambil semua menu yang memiliki URL (bukan parent kosong)
-        $menus = Menu::whereNotNull('url')->where('url', '!=', '#')->get();
+        $menus = Cache::remember("permission_menus:v{$cacheVersion}", 3600, function () {
+            return Menu::whereNotNull('url')
+                ->where('url', '!=', '#')
+                ->get(['id', 'url']);
+        });
 
         $currentMenu = null;
         foreach ($menus as $menu) {
@@ -64,12 +65,27 @@ class CheckPermission
         }
 
         // 4. Cek Permission di Database
-        $permission = Permission::where('role_id', $user->role_id)
-            ->where('menu_id', $currentMenu->id)
-            ->first();
+        $permission = Cache::remember(
+            "permission_role:{$user->role_id}:menu:{$currentMenu->id}:v{$cacheVersion}",
+            3600,
+            function () use ($user, $currentMenu) {
+                return Permission::where('role_id', $user->role_id)
+                    ->where('menu_id', $currentMenu->id)
+                    ->first(['can_view', 'can_add', 'can_update', 'can_delete']);
+            }
+        );
 
         if (!$permission) {
-            abort(403, 'Anda tidak memiliki hak akses untuk menu ini.');
+            if (!$user->isSuperAdmin()) {
+                abort(403, 'Anda tidak memiliki hak akses untuk menu ini.');
+            }
+
+            $permission = (object) [
+                'can_view' => true,
+                'can_add' => true,
+                'can_update' => true,
+                'can_delete' => true,
+            ];
         }
 
         // 5. Tentukan Action & Cek Hak Akses Spesifik

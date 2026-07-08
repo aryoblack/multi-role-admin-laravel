@@ -16,12 +16,14 @@
                 </h1>
                 <p class="page-subtitle">Kelola data pengguna sistem</p>
             </div>
-            <button type="button"
-                id="btnAdd"
-                class="btn-primary-theme">
-                <i class="fas fa-plus"></i>
-                <span>Tambah User</span>
-            </button>
+            @if($pagePermission->can_add)
+                <button type="button"
+                    id="btnAdd"
+                    class="btn-primary-theme">
+                    <i class="fas fa-plus"></i>
+                    <span>Tambah User</span>
+                </button>
+            @endif
         </div>
     </div>
 

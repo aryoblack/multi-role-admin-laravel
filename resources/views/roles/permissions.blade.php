@@ -40,6 +40,13 @@
                 @csrf
                 @method('PUT')
 
+                @if(!$pagePermission->can_update)
+                    <div class="m-6 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
+                        Anda hanya memiliki akses melihat permission. Perubahan hak akses tidak tersedia untuk role Anda.
+                    </div>
+                @endif
+
+                <fieldset {{ !$pagePermission->can_update ? 'disabled' : '' }}>
                 <div class="inline-block min-w-full align-middle">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50 border-b-2 border-gray-200">
@@ -187,12 +194,17 @@
                         </tbody>
                     </table>
                 </div>
+                </fieldset>
 
                 <div class="px-6 py-6 bg-gray-50 border-t border-gray-100 flex items-center justify-end">
-                    <button type="submit" class="btn-primary-theme">
-                        <i class="fas fa-save text-lg transition-transform group-hover:scale-110"></i>
-                        <span>Simpan Hak Akses</span>
-                    </button>
+                    @if($pagePermission->can_update)
+                        <button type="submit" class="btn-primary-theme">
+                            <i class="fas fa-save text-lg transition-transform group-hover:scale-110"></i>
+                            <span>Simpan Hak Akses</span>
+                        </button>
+                    @else
+                        <span class="text-sm text-gray-500">Mode lihat saja</span>
+                    @endif
                 </div>
             </form>
         </div>

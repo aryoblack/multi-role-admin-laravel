@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AppSetting;
+use App\Support\PermissionResolver;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -13,23 +14,25 @@ class AppSettingController extends Controller
     public function index()
     {
         $setting = AppSetting::getData();
-        return view('app-settings.index', compact('setting'));
+        $pagePermission = PermissionResolver::forPath(request()->user(), '/app-settings');
+
+        return view('app-settings.index', compact('setting', 'pagePermission'));
     }
 
     public function update(Request $request)
     {
-        try {
-            $data = $request->validate([
-                'app_name' => 'required|string|max:255',
-                'app_logo' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
-                'app_favicon' => 'nullable|image|mimes:ico,png,jpg|max:512',
-                'primary_color' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
-                'secondary_color' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
-                'footer_text' => 'nullable|string|max:255',
-                'allow_registration' => 'boolean',
-                'maintenance_mode' => 'boolean',
-            ]);
+        $data = $request->validate([
+            'app_name' => 'required|string|max:255',
+            'app_logo' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048',
+            'app_favicon' => 'nullable|image|mimes:ico,png,jpg|max:512',
+            'primary_color' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'secondary_color' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'footer_text' => 'nullable|string|max:255',
+            'allow_registration' => 'boolean',
+            'maintenance_mode' => 'boolean',
+        ]);
 
+        try {
             $setting = AppSetting::first() ?: new AppSetting();
 
             // Handle Checkboxes (since they don't send anything if unchecked)

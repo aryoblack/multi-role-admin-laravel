@@ -7,11 +7,10 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\Role;
 use App\Models\User;
 use App\Services\UserService;
+use App\Support\PermissionResolver;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -28,6 +27,8 @@ class UserController extends Controller
      */
     public function index(Request $request): View|JsonResponse
     {
+        $pagePermission = PermissionResolver::forPath($request->user(), '/users');
+
         if ($request->ajax()) {
             $users = User::with('role')->select('users.*');
 
@@ -47,14 +48,24 @@ class UserController extends Controller
                         ? '<span class="badge-modern bg-green-100 text-green-700 border border-green-200">Active</span>'
                         : '<span class="badge-modern bg-red-100 text-red-700 border border-red-200">Inactive</span>';
                 })
-                ->addColumn('action', function ($user) {
-                    $editBtn = '<button type="button" class="icon-action icon-action-edit edit-btn" data-id="' . $user->id . '" title="Edit">
+                ->addColumn('action', function ($user) use ($pagePermission) {
+                    $buttons = '';
+
+                    if ($pagePermission->can_update) {
+                        $buttons .= '<button type="button" class="icon-action icon-action-edit edit-btn" data-id="' . $user->id . '" title="Edit">
                                     <i class="fas fa-edit text-xs"></i>
                                 </button>';
-                    $deleteBtn = '<button type="button" class="icon-action icon-action-delete delete-btn" data-id="' . $user->id . '" title="Delete">
+                    }
+
+                    if ($pagePermission->can_delete) {
+                        $buttons .= '<button type="button" class="icon-action icon-action-delete delete-btn" data-id="' . $user->id . '" title="Delete">
                                     <i class="fas fa-trash text-xs"></i>
                                 </button>';
-                    return '<div class="flex items-center justify-center gap-2">' . $editBtn . $deleteBtn . '</div>';
+                    }
+
+                    return $buttons !== ''
+                        ? '<div class="flex items-center justify-center gap-2">' . $buttons . '</div>'
+                        : '<span class="text-gray-400">-</span>';
                 })
                 ->rawColumns(['status_badge', 'action'])
                 ->make(true);
@@ -66,7 +77,7 @@ class UserController extends Controller
         }
         $roles = $roles->get();
 
-        return view('users.index', compact('roles'));
+        return view('users.index', compact('roles', 'pagePermission'));
     }
 
     /**

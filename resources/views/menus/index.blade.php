@@ -16,12 +16,14 @@
                 </h1>
                 <p class="page-subtitle">Kelola menu navigasi sistem</p>
             </div>
-            <button type="button"
-                id="btnAdd"
-                class="btn-primary-theme">
-                <i class="fas fa-plus"></i>
-                <span>Tambah Menu</span>
-            </button>
+            @if($pagePermission->can_add)
+                <button type="button"
+                    id="btnAdd"
+                    class="btn-primary-theme">
+                    <i class="fas fa-plus"></i>
+                    <span>Tambah Menu</span>
+                </button>
+            @endif
         </div>
     </div>
 

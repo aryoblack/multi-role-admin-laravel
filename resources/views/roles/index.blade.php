@@ -16,11 +16,13 @@
                 </h1>
                 <p class="page-subtitle">Kelola role dan hak akses pengguna</p>
             </div>
-            <a href="{{ route('roles.create') }}"
-                class="btn-primary-theme">
-                <i class="fas fa-plus"></i>
-                <span>Tambah Role</span>
-            </a>
+            @if($pagePermission->can_add)
+                <a href="{{ route('roles.create') }}"
+                    class="btn-primary-theme">
+                    <i class="fas fa-plus"></i>
+                    <span>Tambah Role</span>
+                </a>
+            @endif
         </div>
     </div>
 
@@ -63,27 +65,34 @@
                     </div>
 
                     <div class="flex items-center gap-2 pt-3 border-t border-gray-200">
-                        <a href="{{ route('roles.permissions', $role->id) }}"
-                            class="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors duration-200">
-                            <i class="fas fa-shield-alt"></i>
-                            <span>Permission</span>
-                        </a>
-                        <a href="{{ route('roles.edit', $role->id) }}"
-                            class="icon-action icon-action-edit">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <form action="{{ route('roles.destroy', $role->id) }}"
-                            method="POST"
-                            class="inline"
-                            onsubmit="return confirm('Yakin ingin menghapus role ini?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit"
-                                class="icon-action icon-action-delete disabled:opacity-50 disabled:cursor-not-allowed"
-                                {{ $role->users_count > 0 ? 'disabled' : '' }}>
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form>
+                        @if($pagePermission->can_update)
+                            <a href="{{ route('roles.permissions', $role->id) }}"
+                                class="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors duration-200">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Permission</span>
+                            </a>
+                            <a href="{{ route('roles.edit', $role->id) }}"
+                                class="icon-action icon-action-edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        @endif
+                        @if($pagePermission->can_delete)
+                            <form action="{{ route('roles.destroy', $role->id) }}"
+                                method="POST"
+                                class="inline"
+                                onsubmit="return confirm('Yakin ingin menghapus role ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="icon-action icon-action-delete disabled:opacity-50 disabled:cursor-not-allowed"
+                                    {{ $role->users_count > 0 ? 'disabled' : '' }}>
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        @endif
+                        @if(!$pagePermission->can_update && !$pagePermission->can_delete)
+                            <span class="text-sm text-gray-400">Tidak ada aksi</span>
+                        @endif
                     </div>
                 </div>
                 @empty
@@ -93,11 +102,13 @@
                             <i class="fas fa-inbox text-3xl text-gray-400"></i>
                         </div>
                         <p class="text-gray-500 font-medium">Tidak ada data role</p>
-                        <a href="{{ route('roles.create') }}"
-                            class="btn-primary-theme">
-                            <i class="fas fa-plus"></i>
-                            Tambah Role Pertama
-                        </a>
+                        @if($pagePermission->can_add)
+                            <a href="{{ route('roles.create') }}"
+                                class="btn-primary-theme">
+                                <i class="fas fa-plus"></i>
+                                Tambah Role Pertama
+                            </a>
+                        @endif
                     </div>
                 </div>
                 @endforelse
@@ -141,29 +152,36 @@
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center justify-center gap-2">
-                                    <a href="{{ route('roles.permissions', $role->id) }}"
-                                        class="icon-action icon-action-info"
-                                        title="Manage Permission">
-                                        <i class="fas fa-shield-alt text-sm"></i>
-                                    </a>
-                                    <a href="{{ route('roles.edit', $role->id) }}"
-                                        class="icon-action icon-action-edit"
-                                        title="Edit">
-                                        <i class="fas fa-edit text-sm"></i>
-                                    </a>
-                                    <form action="{{ route('roles.destroy', $role->id) }}"
-                                        method="POST"
-                                        class="inline"
-                                        onsubmit="return confirm('Yakin ingin menghapus role ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="icon-action icon-action-delete disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
-                                            {{ $role->users_count > 0 ? 'disabled' : '' }}
-                                            title="{{ $role->users_count > 0 ? 'Tidak dapat dihapus, masih ada user' : 'Hapus' }}">
-                                            <i class="fas fa-trash text-sm"></i>
-                                        </button>
-                                    </form>
+                                    @if($pagePermission->can_update)
+                                        <a href="{{ route('roles.permissions', $role->id) }}"
+                                            class="icon-action icon-action-info"
+                                            title="Manage Permission">
+                                            <i class="fas fa-shield-alt text-sm"></i>
+                                        </a>
+                                        <a href="{{ route('roles.edit', $role->id) }}"
+                                            class="icon-action icon-action-edit"
+                                            title="Edit">
+                                            <i class="fas fa-edit text-sm"></i>
+                                        </a>
+                                    @endif
+                                    @if($pagePermission->can_delete)
+                                        <form action="{{ route('roles.destroy', $role->id) }}"
+                                            method="POST"
+                                            class="inline"
+                                            onsubmit="return confirm('Yakin ingin menghapus role ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="icon-action icon-action-delete disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+                                                {{ $role->users_count > 0 ? 'disabled' : '' }}
+                                                title="{{ $role->users_count > 0 ? 'Tidak dapat dihapus, masih ada user' : 'Hapus' }}">
+                                                <i class="fas fa-trash text-sm"></i>
+                                            </button>
+                                        </form>
+                                    @endif
+                                    @if(!$pagePermission->can_update && !$pagePermission->can_delete)
+                                        <span class="text-gray-400">-</span>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
@@ -175,11 +193,13 @@
                                         <i class="fas fa-inbox text-3xl text-gray-400"></i>
                                     </div>
                                     <p class="text-gray-500 font-medium">Tidak ada data role</p>
-                                    <a href="{{ route('roles.create') }}"
-                                        class="btn-primary-theme">
-                                        <i class="fas fa-plus"></i>
-                                        Tambah Role Pertama
-                                    </a>
+                                    @if($pagePermission->can_add)
+                                        <a href="{{ route('roles.create') }}"
+                                            class="btn-primary-theme">
+                                            <i class="fas fa-plus"></i>
+                                            Tambah Role Pertama
+                                        </a>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

@@ -197,7 +197,7 @@ class DatabaseBackupController extends Controller
                     'export_file' => $result['filename'],
                 ]);
 
-                return response()->download($result['filepath'])->deleteFileAfterSend(true);
+                return response()->download($result['filepath']);
             }
 
             return response()->json([
