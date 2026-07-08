@@ -15,6 +15,36 @@ Aplikasi manajemen multi-role berbasis Laravel 12. Proyek ini menyediakan autent
 - Pengaturan aplikasi.
 - Backup, restore, download, upload, hapus, dan export database untuk cPanel.
 
+## Tampilan Aplikasi
+
+### Dashboard
+
+![Dashboard](screenshoot/Screenshot%202026-07-08%20at%2015-44-38%20Dashboard.png)
+
+### Manajemen User
+
+![Manajemen User](screenshoot/Screenshot%202026-07-08%20at%2015-44-47%20Manajemen%20User.png)
+
+### Manajemen Role
+
+![Manajemen Role](screenshoot/Screenshot%202026-07-08%20at%2015-44-52%20Manajemen%20Role.png)
+
+### Manajemen Menu
+
+![Manajemen Menu](screenshoot/Screenshot%202026-07-08%20at%2015-44-59%20Manajemen%20Menu.png)
+
+### Backup Database
+
+![Backup Database](screenshoot/Screenshot%202026-07-08%20at%2015-45-04%20Backup%20Database.png)
+
+### Pengaturan Aplikasi
+
+![Pengaturan Aplikasi](screenshoot/Screenshot%202026-07-08%20at%2015-45-10%20Pengaturan%20Aplikasi.png)
+
+### Pengaturan Perusahaan
+
+![Pengaturan Perusahaan](screenshoot/Screenshot%202026-07-08%20at%2015-45-15%20Pengaturan%20Perusahaan.png)
+
 ## Teknologi
 
 Backend:
